@@ -1,0 +1,29 @@
+SchemaVersion: 2018-07-01
+Owner: "@10gen/dev-prod-tips"
+Description: |
+  This is an introductory workload that shows how to write a workload in Genny.
+  This workload writes a few messages to the screen.
+
+Actors:
+- Name: RyansTestActor
+  Type: HelloWorld
+  Threads: 2
+  Phases:
+  - Message: Hello Phase 0 🐳
+    Duration: 50 milliseconds
+    # GlobalRate: 99 per 88 nanoseconds
+    # SleepBefore: 11 milliseconds
+    # SleepAfter: 17 microseconds
+    # MetricsName: 🐳Message
+  - Message: Hello Phase 1 👬
+    Repeat: 100
+    # To limit the throughput to a percentage of the max, specify global rate as a percent.
+    # This will run at max throughput for 1 minute or 3 iterations, whichever is longer,
+    # then limit to a fraction of that for the rest of the phase.
+    # GlobalRate: 80%
+
+AutoRun:
+- When:
+    mongodb_setup:
+      $eq:
+      - standalone
